@@ -1,14 +1,20 @@
-const db = require('../models/pgdb.js');
+const db = require('../models/db.js');
 const request = require('supertest');
 
-describe('pgdb model tests', () => {
-    const testTable = 'test_table_pgdbx';
+describe('db model tests', () => {
+    const testTable = 'test_table_from_unittests';
     let result;
     
     beforeAll(async () => {
         const createTable = `CREATE TABLE ${testTable} (id bigint, name varchar);`;
         await db.query(createTable);
     })
+
+    it('succesfully reads existing tables from database', async () => {
+        let tableNames = await db.getTableNames();
+        console.log(tableNames);
+        expect(tableNames).toContain(testTable);
+    });
 
     it('succesfully inserts a new entry into the database', async () => {
         const insertQuery = `INSERT INTO ${testTable} (id, name) VALUES ('1', 'test-entry');`;
