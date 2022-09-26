@@ -1,34 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState} from 'react'
+import Catbox from './components/Catbox.jsx'
+import axios from 'axios';
 
-class App extends React.Component
-{
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: ''
-        }
-    }
 
-    render() {
-        console.log("Rendering App")
-        return (
-            <h1>{this.state.title}</h1>
-        )
-    }
+function App(props) {
+    const [title, setTitle] = useState('')
+    
+    useEffect(() => {
+      const fetchTitle = async () => {
+        const response = await axios.get('http://localhost:8080');
+        setTitle(response.data.title);
+      }
 
-    componentDidMount() {
-        fetch('http://localhost:8080', {
-            headers: {'Content-Type': 'application/json' },
-        })
-        .then(res => { return res.json() })
-        .then((titleObj) => {
-            return this.setState ({
-                title: titleObj.title
-            })})
-        .catch(err => console.log(`App.componentDidMount: get title ERROR: ${err}`));
-    }
+      fetchTitle()
+      .catch(console.error);
+    })
 
+    return (
+        <>
+          <Catbox />
+          <h1>{title}</h1>
+        </>
+    )
 }
-
 
 export default App;
