@@ -3,23 +3,27 @@ const axios = require('axios');
 
 let browser;
 let page;
-let likedVideos = [];
+const likedVideos = [];
+let likedVideosTargetLength;
 
-setup();
+setup('https://www.tiktok.com/@drewdunnehere?lang=en');
 
-async function setup() {
+async function setup(url) {
     browser = await puppeteer.launch({
       // headless: false
         // args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     page = await browser.newPage();
-    await navigateToLikePage();
+    await navigateToLikePage(url);
 }
 
-async function navigateToLikePage() {
-    await page.goto('https://www.tiktok.com/@drewdunnehere?lang=en');
-    const likeButton = '.tiktok-1dcmmcm-PLike';
-    await page.waitForSelector(likeButton);
+// document. querySelector('[data-id="box1"]')
+// data-e2e="liked-tab"
+async function navigateToLikePage(url) {
+    await page.goto(url);
+    const likeButton = '[data-e2e*="liked-tab"]';
+    await page.waitForSelector('[data-e2e*="liked-tab"]');
+    console.log("found liked-tab")
     const innerText = await page.$eval(likeButton, el => el.innerText);
     activateReqInterceptor();
     page.click(likeButton);
