@@ -16,14 +16,12 @@ async function setup(url) {
         width: 1920,
         height: 1080
       }
-        // args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     page = await browser.newPage();
     await page.goto(url);
     await getUserTitle();
     console.log('Collecting videos...');
-    await navigateToLikePage(url);
-    await setTimeout(() => true, 500)
+    await collectLikedVideos(url);
     await page.close();
     await browser.close();
 }
@@ -34,9 +32,7 @@ async function getUserTitle() {
   userTitle = await page.$eval(userTitleSelector, el => el.innerText);
 }
 
-// document. querySelector('[data-id="box1"]')
-// data-e2e="liked-tab"
-async function navigateToLikePage(url) {
+async function collectLikedVideos(url) {
     const likeButton = '[data-e2e*="liked-tab"]';
     await page.waitForSelector('[data-e2e*="liked-tab"]');
     const innerText = await page.$eval(likeButton, el => el.innerText);
@@ -52,7 +48,6 @@ async function setRequestInterceptor(bool) {
   
   if (bool === false){
     await page.emitter.off('request', getFavorites);
-    // await page.setRequestInterception(bool);
     }
     else {
       await page.setRequestInterception(bool);
@@ -63,24 +58,23 @@ async function setRequestInterceptor(bool) {
         console.log('Exception in setRequestInterceptor. Error: ' + err);
       }
     }
-    };
-
-    async function getFavorites (interceptedRequest) {
-      try {
-        const url = interceptedRequest.url();
-        if (url.includes('https://us.tiktok.com/api/favorite/'))
-        {
-          console.log("Intercepted a Like list...")
-          await addVideosToVideoUrls(interceptedRequest)
-          console.log('\x1b[32m%s\x1b[0m', `RESOLVED, likedVideos length is now: ${Object.values(likedVideos).length}`);
+      async function getFavorites (interceptedRequest) {
+        try {
+          const url = interceptedRequest.url();
+          if (url.includes('https://us.tiktok.com/api/favorite/'))
+          {
+            console.log("Intercepted a Like list...")
+            await addVideosToVideoUrls(interceptedRequest)
+            console.log('\x1b[32m%s\x1b[0m', `RESOLVED, likedVideos length is now: ${Object.values(likedVideos).length}`);
+          }
+          interceptedRequest.continue();
         }
-        interceptedRequest.continue();
+        catch (err)
+        {
+          console.log("Error, perhaps request interception is no longer enabled? Error: " + err);
+        }
       }
-      catch (err)
-      {
-        console.log("Error, perhaps request interception is no longer enabled? Error: " + err);
-      }
-    }
+    };
 
   async function addVideosToVideoUrls(interceptedRequest)
   {
@@ -127,27 +121,6 @@ async function setRequestInterceptor(bool) {
     }
   }
 
-  // async function autoScroll(page) {
-    //   await page.evaluate(async () => {
-    //     await new Promise((resolve) => {
-    //       let totalHeight = 0;
-    //       let distance = 400;
-    //       let timer = setInterval(() => {
-    //         let scrollHeight = document.body.scrollHeight;
-    //         window.scrollBy(0, distance);
-    //         totalHeight += distance;
-
-    //         if(totalHeight >= scrollHeight - window.innerHeight) {
-    //           clearInterval(timer);
-    //           resolve();
-    //         }
-    //       }, 100);
-    //     });
-    //   });
-    // }
-
-
-
-
-
-
+  export {
+    likedVideos as videos,
+  }
