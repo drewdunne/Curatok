@@ -6,9 +6,10 @@ let page;
 const likedVideos = {};
 let userTitle;
 
-setup('https://www.tiktok.com/@drewdunnehere?lang=en');
+// setup('drewdunnehere');
 
-async function setup(url) {
+async function setup(username, maxTimeout = 500) {
+  const url = `https://www.tiktok.com/` + `@${username}`;
   browser = await puppeteer.launch({
     headless: false,
     args: ['--window-size=1920,1080'],
@@ -17,14 +18,16 @@ async function setup(url) {
       height: 1080,
     },
   });
-  page = await browser.newPage();
+  const pages = await browser.pages();
+  page = pages[0];
   await page.goto(url);
   await getUserTitle();
   console.log('Collecting videos...');
-  await collectLikedVideos(url);
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await collectLikedVideos(url, maxTimeout);
+  await new Promise((resolve) => setTimeout(resolve, 10000));
   await page.close();
   await browser.close();
+  return likedVideos;
 }
 
 async function getUserTitle() {
@@ -33,12 +36,12 @@ async function getUserTitle() {
   userTitle = await page.$eval(userTitleSelector, (el) => el.innerText);
 }
 
-async function collectLikedVideos(url) {
+async function collectLikedVideos(url, maxTimeout) {
   const likeButton = '[data-e2e*="liked-tab"]';
   await page.waitForSelector('[data-e2e*="liked-tab"]');
   setRequestInterceptor(true);
   page.click(likeButton);
-  await autoScroll(page);
+  await autoScroll(page, true, maxTimeout);
   await setRequestInterceptor(false);
 }
 
@@ -61,6 +64,7 @@ async function setRequestInterceptor(bool) {
         await addVideosToVideoUrls(interceptedRequest);
         console.log('\x1b[32m%s\x1b[0m', `RESOLVED, likedVideos length is now: ${Object.values(likedVideos).length}`);
       }
+      if (interceptedRequest.isInterceptResolutionHandled()) return;
       interceptedRequest.continue();
     } catch (err) {
       console.log(`Error, perhaps request interception is no longer enabled? Error: ${err}`);
@@ -81,26 +85,27 @@ async function addVideosToVideoUrls(interceptedRequest) {
   });
 }
 
-const autoScroll = async (page) => {
-  const timeoutDuration = 500; // TIP: Update this value for debugging testing
-  let scroll = true;
+const autoScroll = async (page, scrollModeOn, maxTimeout) => {
   let previousHeight;
-  while (scroll === true) {
+  while (scrollModeOn === true) {
     previousHeight = await page.evaluate('document.body.scrollHeight');
     await page.evaluate('window.scrollTo(0, document.body.scrollHeight)');
-    const loadedMore = await loadMoreIfPossible(timeoutDuration);
+    const loadedMore = await loadMoreIfPossible(maxTimeout, scrollModeOn);
     if (loadedMore === true) {
-      await new Promise(((resolve) => setTimeout(resolve, 500)));
+      await new Promise(((resolve) => setTimeout(resolve(true), 500)));
     } else {
       console.log('End of Page');
-      scroll = false;
+      scrollModeOn = false;
     }
   }
 
-  async function loadMoreIfPossible(timeoutDuration) {
+  async function loadMoreIfPossible(timeoutDuration, scrollModeOn) {
     return new Promise((resolve) => {
       loadPage(resolve);
-      setTimeout(() => resolve(false), timeoutDuration);
+      setTimeout(() => {
+        scrollModeOn = false;
+        resolve(false)
+    }, timeoutDuration);
     });
 
     async function loadPage(resolve) {
@@ -111,5 +116,5 @@ const autoScroll = async (page) => {
 };
 
 module.exports = {
-  videos: likedVideos,
+  videos: setup,
 };

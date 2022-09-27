@@ -1,5 +1,4 @@
 const db = require('../models/db.js');
-const request = require('supertest');
 
 describe('db model tests', () => {
     const testTable = 'test_table_from_unittests';
