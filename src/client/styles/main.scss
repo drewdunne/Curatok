@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-$primary-color: #cc2faf59;
-$secondary-color: #f4f4f4;
-$box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+$primary-color: #edb6e3;
+$secondary-color: #B6C7ED;
+$tertiary-color: #B6C7ED;
+$highlight-color: #EDDCB6;
+// $box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
 
 * {
   box-sizing: border-box;
@@ -32,21 +34,20 @@ body {
   height: auto;
   margin-bottom: 20px;
 }
+input {
+  background-color: #b9a1cf;
+  min-height: 27px;
+  border-radius: 4px;
+}
 
 #login-box {
   display: grid;
-  grid-template-columns: repeat(4, 4vw);
-  column-gap: 1.7vw;
+  grid-template-columns: repeat(4, 5.5vw);
+  column-gap: 2vw;
   row-gap: .4vh;
   border-style: dotted;
   padding: 22px;
   border-radius: 6px;
-
-  input {
-    background-color: #B9A1CF;
-    min-height: 27px;
-    border-radius: 4px;
-  }
 
   #username-input-title {
     grid-column: 1 / 3;
@@ -79,6 +80,82 @@ body {
     margin-top: 15px;
     min-height: 31px;
   }
+}
+
+#create-user-box {
+  display: grid;
+  grid-template-columns: repeat(3, 90px);
+  row-gap: 1vh;
+  border-style: dotted;
+  padding: 22px;
+  border-radius: 6px;
+  
+  #create-user-title {
+    grid-column: 1 / 4;
+    grid-row: 1;
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  #username-input-title {
+    grid-column: 1 / 3;
+    grid-row: 2;
+  }
+
+  #username-input {
+    grid-column: 2 / 4;
+    grid-row: 2;
+  }
+
+  #password-input-title {
+    grid-column: 1 / 3;
+    grid-row: 3;
+  }
+
+  #password-input {
+    grid-column: 2 / 4;
+    grid-row: 3;
+  }
+
+  #submit-login {
+    grid-column: 2;
+    grid-row: 4;
+    align-self: center;
+    margin-top: 7px;
+    background-image: radial-gradient(ellipse at top, $highlight-color, transparent),
+                      radial-gradient(ellipse at bottom, $tertiary-color, transparent);
+    color: black;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 15px;
+    min-height: 31px;
+  }
+
+}
+
+#back-button {
+  align-items: center;
+  margin-top: 7px;
+  background-color: #000000;
+  color: white;
+  font-weight: 600;
+  margin-top: 15px;
+  min-height: 28px;
+  min-width: 65px;
+}
+
+#create-account {
+  grid-template-columns: 1vw;
+  align-items: center;
+  margin-top: 7px;
+  background-image: radial-gradient(ellipse at top, $highlight-color, transparent),
+                    radial-gradient(ellipse at bottom, $tertiary-color, transparent);
+  color: black;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-top: 15px;
+  min-height: 31px;
 }
 
 // .container {
