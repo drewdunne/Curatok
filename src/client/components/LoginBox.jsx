@@ -5,8 +5,8 @@ function Loginbox({ handleLogin, handleKeyDown, setCreateUserScreen }) {
   return (
     <>
       <div id="login-box">
-        <text id="username-input-title">Username</text>
-        <text id="password-input-title">Password</text>
+        <div id="username-input-title">Username</div>
+        <div id="password-input-title">Password</div>
         <input id="username-input" type="text" onKeyDown={handleKeyDown} />
         <input id="password-input" type="text" onKeyDown={handleKeyDown} />
         <input id="submit-login" type="button" value="Enter" onClick={handleLogin} />

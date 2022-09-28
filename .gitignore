@@ -2,3 +2,4 @@ node_modules
 dist/
 credentials/
 .DS_Store
+.env.development

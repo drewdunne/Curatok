@@ -6,31 +6,7 @@ import CreateUserBox from './CreateUserBox';
 import Screens from '../screens';
 
 function Landing(props) {
-  const [screen = Screens.CreateUser, setScreen] = useState();
-
-  switch (screen) {
-    case Screens.Login: {
-      return (
-        <Loginbox
-          handleKeyDown={handleKeyDown}
-          handleLogin={handleLogin}
-          setCreateUserScreen={(e) => { setScreen(Screens.CreateUser); }}
-        />
-      );
-    }
-    case Screens.CreateUser: {
-      return (
-        <CreateUserBox
-          handleKeyDown={handleKeyDown}
-          handleCreateUser={handleCreateUser}
-          setLoginScreen={() => { setScreen(Screens.Login); }}
-        />
-      );
-    }
-    default:
-      console.log('ERROR, Screen value not handled');
-      break;
-  }
+  const [screen = Screens.Login, setScreen] = useState();
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -51,7 +27,32 @@ function Landing(props) {
 
   const handleCreateUser = (e) => {
     // complete validation and then setScreen(Screens.Homepage);
+    
   };
+
+  switch (screen) {
+    case Screens.Login: {
+      return (
+        <Loginbox
+          handleKeyDown={handleKeyDown}
+          handleLogin={handleLogin}
+          setCreateUserScreen={() => { setScreen(Screens.CreateUser); }}
+        />
+      );
+    }
+    case Screens.CreateUser: {
+      return (
+        <CreateUserBox
+          handleKeyDown={handleKeyDown}
+          handleCreateUser={handleCreateUser}
+          setLoginScreen={() => { setScreen(Screens.Login); }}
+        />
+      );
+    }
+    default:
+      console.log('ERROR, Screen value not handled');
+      break;
+  }
 }
 
 export default Landing;
