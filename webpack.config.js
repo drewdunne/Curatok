@@ -24,6 +24,12 @@ module.exports = {
     hot: true, // uses hot reloading
     compress: true, // enables g-zip compression
     historyApiFallback: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        secure: false,
+      },
+    },
   },
   module: {
     rules: [
