@@ -4,48 +4,48 @@ import PropTypes from 'prop-types';
 import VideoContainer from './VideoContainer';
 
 function Feed(props) {
-  let activeIndex = 0;
-  const videoContainers = [];
-  const ids = [];
+  const videoElementIds = [];
+  const video = {};
+  const maxFeedCount = 3;
+  let i = 0;
 
-  const Action = {
-    increase: Symbol('increase'),
-    decrease: Symbol('decrease'),
-  };
-
-  const viewportDetails = {
-    scrollTop: 0,
-    offsetHeight: window.innerHeight,
-  };
-
-  let domObject;
-  let pos;
+  function initializeVideos() {
+    for (let i = 0; i < maxFeedCount; i++) {
+      const rectBoundingBody = document.getElementById(videoElementIds[i]);
+      const element = rectBoundingBody.childNodes[0].childNodes[0];
+      video[i] = {};
+      video[i].element = element;
+      video[i].pos = rectBoundingBody.getBoundingClientRect();
+    }
+  }
 
   React.useEffect(() => {
-    getActiveVideo();
+    initializeVideos();
+    video[i].element.play();
   });
 
-  function getActiveVideo() {
-    console.log(activeIndex);
-    domObject = document.getElementById(ids[activeIndex]);
-    pos = domObject.getBoundingClientRect();
-  }
-
-  function updateActiveIndex(action) {
-    if (action === Action.increase) {
-      activeIndex += 1;
-    }
-    if (action === Action.decrease) {
-      activeIndex -= 1;
-    }
-  }
-
   const handleScroll = (event) => {
+    console.log(i);
+    console.log(video[i].pos.top);
     console.log('scrollTop: ', event.currentTarget.scrollTop);
     console.log('offsetHeight: ', event.currentTarget.offsetHeight);
-    console.log('halfway point of active video:', (pos.bottom - pos.top) / 2);
-    if (event.currentTarget.scrollTop > (pos.bottom - pos.top / 2)) {
-      updateActiveIndex(1);
+    console.log('halfway point of active video:', ((video[i].pos.bottom - video[i].pos.top) / 2) + video[i].pos.top);
+    if (event.currentTarget.scrollTop
+      > (((video[i].pos.bottom - video[i].pos.top) / 2) + video[i].pos.top)) {
+      // console.log('Arrived test passed');
+      video[i].element.pause();
+      i += 1;
+      // console.log(`i is now ${i}`);
+      video[i].element.play();
+    }
+    if (i > 0) {
+      if (event.currentTarget.scrollTop
+        // 10 was chosen arbitrarily as a buffer
+        < (((video[i - 1].pos.bottom - video[i].pos.top) / 2) + video[i].pos.top + 10)) {
+        video[i].element.pause();
+        i -= 1;
+        video[i].element.play();
+      }
     }
   };
 
@@ -65,13 +65,16 @@ function Feed(props) {
     'https://v16m-webapp.tiktokcdn-us.com/571226fb4588b5762883ee981e574074/6335aa7c/video/tos/useast5/tos-useast5-ve-0068c001-tx/60a17b10259346159ccff10866318bd9/?a=1988&ch=0&cr=0&dr=0&lr=tiktok_m&cd=0%7C0%7C1%7C0&cv=1&br=684&bt=342&cs=0&ds=3&ft=ebtHKH-qMyq8ZHQTzhe2N6eufl7Gb&mime_type=video_mp4&qs=0&rc=NjY3PDQ0NmU7NDhoOThlO0BpM3I0ZGc6ZmZ4ZjMzZzczNEA2MzZfNV8vNmMxNWI0LjFhYSNfNV5ocjRnZl9gLS1kMS9zcw%3D%3D&l=202209290823134E8116BDE4297500889A',
   ];
 
+  const videoContainers = [];
   for (let i = 0; i < 3; i++) {
     const id = getUniqueVideoId();
     const url = urls[i];
-    ids.push(id);
+    videoElementIds.push(id);
+
     videoContainers.push(<VideoContainer
       id={id}
       url={url}
+      key={id}
     />);
   }
 
