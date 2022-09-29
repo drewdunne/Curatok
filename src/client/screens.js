@@ -1,7 +1,7 @@
 const Screens = {
   Homepage: 'homepage',
   Collection: 'collection',
-  CreateUser: 'createUser',
+  SignUp: 'createUser',
   Login: 'login',
 };
 

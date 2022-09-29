@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loginbox from './Loginbox';
-import CreateUserBox from './CreateUserBox';
+import SignUpModal from './CreateUserBox';
 import Screens from '../screens';
 
 function Landing(props) {
@@ -10,7 +10,7 @@ function Landing(props) {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (screen === Screens.CreateUser) {
+      if (screen === Screens.SignUp) {
         handleCreateUser(e);
       }
       if (screen === Screen.Login) {
@@ -27,25 +27,25 @@ function Landing(props) {
 
   const handleCreateUser = (e) => {
     // complete validation and then setScreen(Screens.Homepage);
-    
+
   };
 
   switch (screen) {
+    case Screens.SignUp: {
+      return (
+        <SignUpModal
+          handleKeyDown={handleKeyDown}
+          handleCreateUser={handleCreateUser}
+          setLoginScreen={() => { setScreen(Screens.Login); }}
+        />
+      );
+    }
     case Screens.Login: {
       return (
         <Loginbox
           handleKeyDown={handleKeyDown}
           handleLogin={handleLogin}
-          setCreateUserScreen={() => { setScreen(Screens.CreateUser); }}
-        />
-      );
-    }
-    case Screens.CreateUser: {
-      return (
-        <CreateUserBox
-          handleKeyDown={handleKeyDown}
-          handleCreateUser={handleCreateUser}
-          setLoginScreen={() => { setScreen(Screens.Login); }}
+          setCreateUserScreen={() => { setScreen(Screens.SignUp); }}
         />
       );
     }

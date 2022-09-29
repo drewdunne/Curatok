@@ -1,9 +1,11 @@
 /* eslint-disable no-undef */
-const db = require('../models/db');
+const { insertRecord } = require('../controllers/dbController');
+const db = require('../controllers/dbController');
 
 describe('db model tests', () => {
   const testTable = 'test_table_from_unittests';
   let result;
+  const timeoutDuration = 10000;
 
   beforeAll(async () => {
     const createTable = `CREATE TABLE ${testTable} (id bigint, name varchar);`;
@@ -38,6 +40,19 @@ describe('db model tests', () => {
       }
     });
   });
+
+  describe('inserRecord function', () => {
+    it('correctly inserts records into tester table', async () => {
+      const record = {
+        name: 'andrew',
+        description: 'coding like a mofo',
+        number: 9001,
+      };
+
+      const response = await insertRecord('tester', record);
+      expect(response).toBeDefined();
+    });
+  }, timeoutDuration);
 
   it('succesfully inserts a new entry into the database', async () => {
     const insertQuery = `INSERT INTO ${testTable} (id, name) VALUES ('2', 'test-entry');`;
