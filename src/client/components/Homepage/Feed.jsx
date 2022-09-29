@@ -8,9 +8,10 @@ import VideoContainer from './VideoContainer';
 function Feed({ userVideoCollection }) {
   const videoElementIds = [];
   const video = {};
-  const maxFeedCount = 3;
+  const maxFeedCount = 15;
   let i = 0;
   const urls = [];
+  const usedRandoms = [];
 
   function initializeVideos() {
     for (let i = 0; i < maxFeedCount; i++) {
@@ -72,9 +73,14 @@ function Feed({ userVideoCollection }) {
 
   const videoContainers = [];
   for (let i = 0; i < maxFeedCount; i++) {
+    let random;
+    do {
+      random = Math.floor(Math.random() * urls.length);
+    } while (usedRandoms.includes(random));
+
+    usedRandoms.push(random);
     const id = getUniqueVideoId();
-    const url = urls[i];
-    console.log(`pushing ${url} into videoElementIds`);
+    const url = urls[random];
     videoElementIds.push(id);
 
     videoContainers.push(<VideoContainer
