@@ -6,7 +6,7 @@ const app = express();
 const cors = require('cors');
 
 const cookieController = require('./controllers/cookieController');
-const userRouter = require('./models/userModel.js');
+const userRouter = require('./routes/user.js');
 
 const PORT = 8080;
 
