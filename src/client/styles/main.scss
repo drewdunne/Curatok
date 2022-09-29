@@ -15,6 +15,7 @@ body {
   background: $dark-grey;
   margin: 0;
 }
+
 .login-modal {
   background:$light-grey;
   display: flex;
@@ -25,6 +26,7 @@ body {
   gap: 16px;
 }
 
+//Homepage
 #homepage {
   height: 100vh;
   width: 100vw;
@@ -34,10 +36,9 @@ body {
   display: grid;
   grid-template-columns: 100vw;
   grid-template-rows: 6.1vh 3.5vh 1fr;
-
-
 }
 
+//Homepage__Header
 #header {
   display: flex;
   flex-direction: row;
@@ -48,13 +49,12 @@ body {
   border-bottom: 1px solid $search-white;
 }    
 
-
 #search-bar {
   display: flex;
   align-items: center;
   flex-direction: row;
   background: $search-white;
-  border-radius: 8px;
+  border-radius: 1.5vmax;
   flex-basis: 45%;
   height: 3.6vh;
   
@@ -78,7 +78,6 @@ body {
   width: auto;
 }
 
-
 .material-symbols-outlined {
   font-size: 2vmin !important;
   color: $light-grey !important;
@@ -91,6 +90,8 @@ body {
   'opsz' 48
 }
 
+
+//Homepage__HashtagBanner
 #hashtag-banner {
   display: flex;
   flex-direction: row;
@@ -103,7 +104,6 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
-
 .hashtag-button-border-wrapper {
   display: flex;
   align-items: center;
@@ -112,8 +112,8 @@ body {
   background: linear-gradient(270deg, #577CF1 -20.19%, #9561D4 50.46%, #EE3AAA 115.26%);
   border-radius: 100px;
   position: relative;
-  height: 2.3vh;
-  min-height: 32px;
+  margin: 0px 10px 0px 10px;
+  padding: 2px 2px 2px 2px;
 
 }
 
@@ -129,7 +129,6 @@ body {
   align-items: center;;
 
   padding: .4vh .7vw .4vh .7vw;
-  margin: 0px 10px 0px 10px;
   gap: 8px;           
   
   height: 2vh;
@@ -149,10 +148,3 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-
-
-#header {
-  
-}
-
-
