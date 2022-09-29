@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function CreateUserBox({ handleCreateUser, handleKeyDown, setLoginScreen }) {
+  useEffect(() => {
+    
+  });
+
   return (
     <>
-      <div id="create-user-box">
-        <div id="create-user-title">Create Account</div>
+      <div className="login-modal">
+        <img  className="curatok-logo" />
+        <div className="modal-title">Sign Up</div>
+        <div id="create-user-title">Sign Up</div>
         <div id="username-input-title">Username:</div>
         <div id="password-input-title">Password:</div>
         <input id="username-input" onKeyDown={handleKeyDown} />

@@ -1,8 +1,8 @@
 /* eslint-disable no-use-before-define */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Loginbox from './Loginbox';
-import SignUpModal from './CreateUserBox';
+import LoginModal from './LoginModal';
+import SignUpModal from './SignUpModal';
 import Screens from '../screens';
 
 function Landing(props) {
@@ -42,7 +42,7 @@ function Landing(props) {
     }
     case Screens.Login: {
       return (
-        <Loginbox
+        <LoginModal
           handleKeyDown={handleKeyDown}
           handleLogin={handleLogin}
           setCreateUserScreen={() => { setScreen(Screens.SignUp); }}
