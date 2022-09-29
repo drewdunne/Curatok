@@ -5,8 +5,11 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 
+const scraperController = require('./controllers/scraperController');
 const cookieController = require('./controllers/cookieController');
-const userRouter = require('./routes/user.js');
+
+const user = require('./routes/user');
+const scraper = require('./routes/scraper');
 
 const PORT = 8080;
 
@@ -15,7 +18,9 @@ app.use(cookieParser());
 // app.use(cors({ origin: 'http://localhost:3000' }));
 // app.use(express.json());
 
-app.use('/api/createuser', userRouter);
+app.use('/api/createuser', user);
+
+app.use('/api/', scraper);
 
 app.get('/api', (req, res) => {
   res.send({ title: 'Coding in Progress!' });
@@ -30,7 +35,7 @@ app.get('/api', (req, res) => {
 //   // res.sendFile(path.resolve(__dirname, '../../dist/index.html'));
 // });
 
-app.use('/user', userRouter);
+app.use('/user', user);
 
 app.use((err, req, res) => {
   // defaultErr object

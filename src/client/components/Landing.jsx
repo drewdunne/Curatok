@@ -1,20 +1,25 @@
 /* eslint-disable no-use-before-define */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Loginbox from './Loginbox';
-import SignUpModal from './CreateUserBox';
+import LoginModal from './LoginModal';
+import SignUpModal from './SignUpModal';
 import Screens from '../screens';
+import TikTokUsernameModal from './TikTokUsernameModal';
+import Homepage from './Homepage/Homepage';
 
 function Landing(props) {
-  const [screen = Screens.Login, setScreen] = useState();
+  const [screen = Screens.TikTokUsername, setScreen] = useState();
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       if (screen === Screens.SignUp) {
         handleCreateUser(e);
       }
-      if (screen === Screen.Login) {
+      if (screen === Screens.Login) {
         handleLogin(e);
+      }
+      if (screen === Screens.TikTokUsername) {
+        handleGetCollection(e);
       }
     }
   };
@@ -30,6 +35,14 @@ function Landing(props) {
 
   };
 
+  const handleGetCollection = async (username) => {
+    const url = `/api/${username}`;
+    const response = await axios.post(url, {
+    });
+
+    console.log(response);
+  };
+
   switch (screen) {
     case Screens.SignUp: {
       return (
@@ -42,11 +55,25 @@ function Landing(props) {
     }
     case Screens.Login: {
       return (
-        <Loginbox
+        <LoginModal
           handleKeyDown={handleKeyDown}
           handleLogin={handleLogin}
           setCreateUserScreen={() => { setScreen(Screens.SignUp); }}
         />
+      );
+    }
+    case Screens.TikTokUsername: {
+      return (
+        <TikTokUsernameModal
+          handleKeyDown={handleKeyDown}
+          handleGetCollection={handleGetCollection}
+          setHomepageScreen={() => { setScreen(Screens.Homepage); }}
+        />
+      );
+    }
+    case Screens.Homepage: {
+      return (
+        <Homepage />
       );
     }
     default:

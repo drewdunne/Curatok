@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Loginbox({ handleLogin, handleKeyDown, setCreateUserScreen }) {
+function LoginModal({ handleLogin, handleKeyDown, setCreateUserScreen }) {
   return (
     <>
       <div id="login-box">
@@ -15,10 +15,10 @@ function Loginbox({ handleLogin, handleKeyDown, setCreateUserScreen }) {
     </>
   );
 }
-Loginbox.propTypes = {
+LoginModal.propTypes = {
   handleKeyDown: PropTypes.func.isRequired,
   handleLogin: PropTypes.func.isRequired,
   setCreateUserScreen: PropTypes.func.isRequired,
 };
 
-export default Loginbox;
+export default LoginModal;

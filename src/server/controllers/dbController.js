@@ -1,5 +1,26 @@
 const db = require('../models/db');
 
+async function getVideos(username) {
+  const query = `SELECT * FROM videos WHERE liked_by='${username}';`;
+  const response = await db.query(query);
+}
+
+async function insertScrapeResults(username, urls) {
+  // expects urls to be an array
+  await urls.forEach(async (element) => {
+    insertRecord('videos', {
+      username,
+      url: element,
+    });
+  });
+}
+
+async function dropTable(tableName) {
+  const query = `DROP TABLE ${tableName}`;
+  const result = await db.query(query);
+  return result;
+}
+
 async function getTableNames() {
   try {
     // \d was throwing an error. Using the below instead, determined the public
@@ -20,7 +41,7 @@ async function getTableNames() {
 async function insertRecord(table, data) {
   // data is expected to be an object with keys for the attributes and values for the values
   // ideally this function would also match data vs a schema.
-  
+
   let query = `INSERT INTO ${table}`;
   let attributesString = '';
   let valuesString = '';
@@ -48,6 +69,8 @@ async function alterTable(alterationType) {
 }
 
 async function createTable(name, autoPopulatePkey, ...attributes) {
+  // currently only supports string types
+  console.log(attributes);
   const tables = await getTableNames();
   if (tables.includes(name)) {
     throw new Error('Table already Exists');
@@ -63,7 +86,7 @@ async function createTable(name, autoPopulatePkey, ...attributes) {
     query = query.concat(',');
   }
   if (attributes.length !== 0) {
-    query = query.concat(attributes.toString());
+    query = query.concat(attributes.toString(), 'VARCHAR');
   }
   query = query.concat(' );');
   await db.query(query);
@@ -72,6 +95,9 @@ async function createTable(name, autoPopulatePkey, ...attributes) {
 module.exports = {
   query: db.query,
   getTableNames: async () => getTableNames(),
-  createTable: (name, ...attributes) => createTable(name, ...attributes),
+  createTable,
   insertRecord,
+  dropTable,
+  getVideos,
+  insertVideos: insertScrapeResults,
 };
