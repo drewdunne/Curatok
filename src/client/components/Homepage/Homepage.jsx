@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Header from './Header';
 import HashtagBanner from './HashtagBanner';
-import Feed from './Feed';
+import Body from './Body';
 
 function Homepage(props) {
 //   useEffect(() => {
@@ -14,7 +14,7 @@ function Homepage(props) {
     <div id="homepage">
       <Header />
       <HashtagBanner />
-      <Feed />
+      <Body />
 
     </div>
   );
