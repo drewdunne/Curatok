@@ -1,7 +1,11 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 const Mode = require('../../Mode');
 const RequestType = require('../../scraper/RequestTypes');
 const ScrapeRequest = require('../../scraper/ScrapeRequest');
+const { insertRecord, getVideos } = require('./dbController');
 const db = require('./dbController');
+const dbRouter = require('../routes/db');
 
 const scraperController = {};
 
@@ -12,16 +16,24 @@ scraperController.executeScrape = async (req, res, next) => {
   await scrape.open(req.params.username);
   const videos = await scrape.send();
 
-  // Hack for presentation
+  // Hack for presentation, drop videos table every time
   try {
     await db.dropTable('videos');
   } catch {
     console.log('scraperController.executeScrape: table did not exist');
   }
 
-  console.log(videos);
-  db.createTable('videos', false, 'username', 'url');
+  await db.createTable('videos', false, 'username', 'url');
 
+  for (const key in videos) {
+    await insertRecord('videos', {
+      username: req.params.username,
+      url: videos[key].Url,
+    });
+  }
+
+  res.locals.videos = await getVideos(req.params.username);
+  console.log(res.locals.videos);
   next();
 };
 

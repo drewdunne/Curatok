@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Feed from './Feed';
 import Sidebar from './Sidebar';
 
-function Body(props) {
+function Body({ userVideoCollection }) {
   return (
     <div className="body">
       {/* <Sidebar /> */}
-      <Feed />
+      <Feed userVideoCollection={userVideoCollection} />
       {/* <Sidebar /> */}
     </div>
   );

@@ -1,13 +1,16 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable react/no-this-in-sfc */
 import React from 'react';
 import PropTypes from 'prop-types';
 import VideoContainer from './VideoContainer';
 
-function Feed(props) {
+function Feed({ userVideoCollection }) {
   const videoElementIds = [];
   const video = {};
   const maxFeedCount = 3;
   let i = 0;
+  const urls = [];
 
   function initializeVideos() {
     for (let i = 0; i < maxFeedCount; i++) {
@@ -60,15 +63,18 @@ function Feed(props) {
 
   const getUniqueVideoId = idGenerator();
 
-  const urls = [
-    'https://v16m-webapp.tiktokcdn-us.com/c774279ec159cbe1c0bd0425e420c3ba/6336172c/video/tos/useast5/tos-useast5-ve-0068c002-tx/ab2736b285b641d69aa7e4dd0a27dee4/?a=1988&ch=0&cr=0&dr=0&lr=tiktok_m&cd=0%7C0%7C1%7C0&cv=1&br=856&bt=428&cs=0&ds=3&ft=ebtHKH-qMyq8Zyuvzhe2N-A7fl7Gb&mime_type=video_mp4&qs=0&rc=ZjZlM2ZoOWc7OTVoaWU1NkBpamVvcDo6ZnI3ZjMzZzczNEAuMjUuMDAyNWMxXmJjNS1jYSNpZi9ucjQwLV9gLS1kMS9zcw%3D%3D&l=20220929160604C3EFF2E17280D204DDA1',
-    'https://v16m-webapp.tiktokcdn-us.com/1daf3856c0a7f4dd64dd6f98bf093abb/633616fa/video/tos/useast2a/tos-useast2a-ve-0068c004/79e43c2eea8840fbad5a27523db91ab3/?a=1988&ch=0&cr=0&dr=0&lr=tiktok_m&cd=0%7C0%7C1%7C0&cv=1&br=1450&bt=725&cs=0&ds=3&ft=ebtHKH-qMyq8Zyuvzhe2N-A7fl7Gb&mime_type=video_mp4&qs=0&rc=NGk3Nmc2OTZlaWlnZzc3NEBpMztnbjg6ZnM3ZjMzNzczM0AtLWAtMDUwXzQxLjVfMzEtYSMvNjUucjQwXzZgLS1kMTZzcw%3D%3D&l=20220929160604C3EFF2E17280D204DDA1',
-    'https://v16m-webapp.tiktokcdn-us.com/1daf3856c0a7f4dd64dd6f98bf093abb/633616fa/video/tos/useast2a/tos-useast2a-ve-0068c004/79e43c2eea8840fbad5a27523db91ab3/?a=1988&ch=0&cr=0&dr=0&lr=tiktok_m&cd=0%7C0%7C1%7C0&cv=1&br=1450&bt=725&cs=0&ds=3&ft=ebtHKH-qMyq8Zyuvzhe2N-A7fl7Gb&mime_type=video_mp4&qs=0&rc=NGk3Nmc2OTZlaWlnZzc3NEBpMztnbjg6ZnM3ZjMzNzczM0AtLWAtMDUwXzQxLjVfMzEtYSMvNjUucjQwXzZgLS1kMTZzcw%3D%3D&l=20220929160604C3EFF2E17280D204DDA1',
-  ];
+  for (const key in userVideoCollection) {
+    console.log('useEffect in Feed test passed');
+    // eslint-disable-next-line no-unused-expressions
+    console.log(userVideoCollection[key].url);
+    urls.push(userVideoCollection[key].url);
+  }
+
   const videoContainers = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < maxFeedCount; i++) {
     const id = getUniqueVideoId();
     const url = urls[i];
+    console.log(`pushing ${url} into videoElementIds`);
     videoElementIds.push(id);
 
     videoContainers.push(<VideoContainer

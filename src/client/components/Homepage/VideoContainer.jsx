@@ -8,6 +8,7 @@ import HashtagBanner from './HashtagBanner';
 class VideoContainer extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props.url);
     this.state = {
       autoplay: '',
     };
