@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Video({ url }) {
+  
   return (
     <div className="video-wrapper">
       <iframe
@@ -15,7 +16,6 @@ function Video({ url }) {
       />
       {' '}
     </div>
-    
   );
 }
 
