@@ -1,8 +1,9 @@
 const db = require('../models/db');
 
 async function getVideos(username) {
-  const query = `SELECT * FROM videos WHERE liked_by='${username}';`;
+  const query = `SELECT * FROM videos WHERE username='${username}';`;
   const response = await db.query(query);
+  return response;
 }
 
 async function insertScrapeResults(username, urls) {
@@ -86,8 +87,12 @@ async function createTable(name, autoPopulatePkey, ...attributes) {
     query = query.concat(',');
   }
   if (attributes.length !== 0) {
-    query = query.concat(attributes.toString(), 'VARCHAR');
+    attributes.forEach((element) => {
+      query = query.concat(element, ' VARCHAR,');
+    });
   }
+  // remove trailing comma
+  query = query.slice(0, -1);
   query = query.concat(' );');
   await db.query(query);
 }

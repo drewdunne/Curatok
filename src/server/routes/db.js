@@ -3,4 +3,6 @@ const dbController = require('../controllers/dbController');
 
 const router = express.Router();
 
-router.get('/:username', )
+router.get('/:username', (req, res) => {
+
+});

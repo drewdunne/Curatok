@@ -5,16 +5,14 @@ import Header from './Header';
 import HashtagBanner from './HashtagBanner';
 import Body from './Body';
 
-function Homepage(props) {
-//   useEffect(() => {
-
-  //   });
+function Homepage({ userVideoCollection }) {
+  console.log(`Homepage's ${userVideoCollection}`);
 
   return (
     <div id="homepage">
       <Header />
       <HashtagBanner />
-      <Body />
+      <Body userVideoCollection={userVideoCollection} />
 
     </div>
   );

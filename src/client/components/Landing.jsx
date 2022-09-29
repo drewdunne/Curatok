@@ -9,6 +9,7 @@ import Homepage from './Homepage/Homepage';
 
 function Landing(props) {
   const [screen = Screens.TikTokUsername, setScreen] = useState();
+  const [scrapedVideos = null, setScrapedVideos] = useState();
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -39,8 +40,8 @@ function Landing(props) {
     const url = `/api/${username}`;
     const response = await axios.post(url, {
     });
-
-    console.log(response);
+    setScrapedVideos(response);
+    setScreen(Screens.Homepage);
   };
 
   switch (screen) {
@@ -73,7 +74,7 @@ function Landing(props) {
     }
     case Screens.Homepage: {
       return (
-        <Homepage />
+        <Homepage userVideoCollection={scrapedVideos.data.rows} />
       );
     }
     default:
