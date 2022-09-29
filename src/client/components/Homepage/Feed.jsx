@@ -64,9 +64,7 @@ function Feed({ userVideoCollection }) {
   const getUniqueVideoId = idGenerator();
 
   for (const key in userVideoCollection) {
-    console.log('useEffect in Feed test passed');
     // eslint-disable-next-line no-unused-expressions
-    console.log(userVideoCollection[key].url);
     urls.push(userVideoCollection[key].url);
   }
 

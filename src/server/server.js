@@ -20,10 +20,17 @@ app.use(cookieParser());
 
 app.use('/api/createuser', user);
 
-app.use('/api/', scraper);
+app.use('/api/scrape', scraper);
 
-app.get('/api', (req, res) => {
-  res.send({ title: 'Coding in Progress!' });
+app.get('/api/cookie', (req, res) => {
+  const response = {
+    hasCookies: true,
+    username: req.cookies.Curatok,
+  };
+  if (req.cookies.Curatok) {
+    return res.status(200).json(response);
+  }
+  return res.send(200);
 });
 
 // app.get('/', cookieController.setCookie, (req, res) => {

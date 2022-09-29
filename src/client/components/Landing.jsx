@@ -7,8 +7,8 @@ import Screens from '../screens';
 import TikTokUsernameModal from './TikTokUsernameModal';
 import Homepage from './Homepage/Homepage';
 
-function Landing(props) {
-  const [screen = Screens.TikTokUsername, setScreen] = useState();
+function Landing({ initialScreen, username }) {
+  const [screen = initialScreen, setScreen] = useState();
   const [scrapedVideos = null, setScrapedVideos] = useState();
 
   const handleKeyDown = (e) => {
@@ -37,7 +37,9 @@ function Landing(props) {
   };
 
   const handleGetCollection = async (username) => {
-    const url = `/api/${username}`;
+    console.log(initialScreen);
+    console.log(`requesting ${username}`);
+    const url = `/api/scrape/${username}`;
     const response = await axios.post(url, {
     });
     setScrapedVideos(response);
@@ -73,9 +75,15 @@ function Landing(props) {
       );
     }
     case Screens.Homepage: {
-      return (
-        <Homepage userVideoCollection={scrapedVideos.data.rows} />
-      );
+      console.log(`scrapedVideos is ${scrapedVideos}`);
+      if (!scrapedVideos) {
+        console.log('inside null check');
+        handleGetCollection(username).then(() => (
+          <Homepage userVideoCollection={scrapedVideos.data.rows} />
+        ));
+      } else {
+        return <Homepage userVideoCollection={scrapedVideos.data.rows} />;
+      }
     }
     default:
       console.log('ERROR, Screen value not handled');

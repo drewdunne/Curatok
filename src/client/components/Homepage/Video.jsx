@@ -10,6 +10,7 @@ function Video({ url, id }) {
     <div id={id} className="video-wrapper">
       <video
         className=""
+        loop=""
         autoPlay=""
         // playsinline="true"
         x5-playsinline="true"

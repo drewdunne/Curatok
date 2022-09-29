@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Feed from './Feed';
 import Sidebar from './Sidebar';
 

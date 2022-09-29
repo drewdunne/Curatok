@@ -1,5 +1,6 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
+const cookieParser = require('cookie-parser');
 const Mode = require('../../Mode');
 const RequestType = require('../../scraper/RequestTypes');
 const ScrapeRequest = require('../../scraper/ScrapeRequest');
@@ -10,31 +11,42 @@ const dbRouter = require('../routes/db');
 const scraperController = {};
 
 scraperController.executeScrape = async (req, res, next) => {
-//   console.log(req.params.username);
-//   console.log('made it to controller test passed');
-  const scrape = new ScrapeRequest(Mode.Dev, RequestType.UserLikedVideos);
-  await scrape.open(req.params.username);
-  const videos = await scrape.send();
+  console.log(req.cookies);
+  console.log(req.params.username);
+  console.log(req.cookies[req.params.username]);
+  if (req.cookies) {
+    console.log('User has a cookie. Fetching from database');
+    const username = req.cookies.Curatok;
+    res.locals.videos = await getVideos(username);
+    console.log(`assigned object to res.locals.videos: ${res.locals.videos}`);
+    next();
+  } else {
+    const scrape = new ScrapeRequest(Mode.Dev, RequestType.UserLikedVideos);
+    await scrape.open(req.params.username);
+    const videos = await scrape.send();
 
-  // Hack for presentation, drop videos table every time
-  try {
-    await db.dropTable('videos');
-  } catch {
-    console.log('scraperController.executeScrape: table did not exist');
+    // Hack for presentation, drop videos table every time
+    try {
+      await db.dropTable('videos');
+    } catch {
+      console.log('scraperController.executeScrape: table did not exist');
+    }
+
+    await db.createTable('videos', false, 'username', 'url');
+
+    for (const key in videos) {
+      await insertRecord('videos', {
+        username: req.params.username,
+        url: videos[key].Url,
+      });
+    }
+
+    res.locals.videos = await getVideos(req.params.username);
+    console.log(res.locals.videos);
+    next();
   }
-
-  await db.createTable('videos', false, 'username', 'url');
-
-  for (const key in videos) {
-    await insertRecord('videos', {
-      username: req.params.username,
-      url: videos[key].Url,
-    });
-  }
-
-  res.locals.videos = await getVideos(req.params.username);
-  console.log(res.locals.videos);
-  next();
+  //   console.log(req.params.username);
+  //   console.log('made it to controller test passed');
 };
 
 module.exports = scraperController;
