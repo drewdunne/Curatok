@@ -12,6 +12,7 @@ describe('Scrape Requests', () => {
     const data = await request.send();
 
     const key = Object.keys(data)[0];
+    console.log(data);
 
     expect(data[key]).toHaveProperty('Url');
     expect(data[key]).toHaveProperty('UrlKey');

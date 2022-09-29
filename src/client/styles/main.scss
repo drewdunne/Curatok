@@ -148,3 +148,41 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  overflow: hidden;
+  justify-content: center;
+}
+
+#feed {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  margin-top: 25px;
+}
+
+.sidebar {
+  justify-self: center;
+}
+
+.video-wrapper {
+  overflow: hidden;
+  width: 575px;
+  height: 1010px;
+
+  iframe {
+    position: relative;
+    left: -253px;
+    top: -450px;
+    
+  }
+}
+
+.video-container {
+  padding: 20px;
+}
