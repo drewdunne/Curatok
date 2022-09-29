@@ -6,9 +6,9 @@ import Sidebar from './Sidebar';
 function Body(props) {
   return (
     <div className="body">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <Feed />
-      <Sidebar />
+      {/* <Sidebar /> */}
     </div>
   );
 }

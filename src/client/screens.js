@@ -3,6 +3,7 @@ const Screens = {
   Collection: 'collection',
   SignUp: 'createUser',
   Login: 'login',
+  TikTokUsername: 'tiktokusername',
 };
 
 export default Screens;

@@ -27,7 +27,7 @@ function App(props) {
   //   .catch(console.log('React getCookie test failed'));
 
   return (
-    <Homepage />
+    <Landing />
   );
 }
 

@@ -3,6 +3,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import Video from './Video';
+import HashtagBanner from './HashtagBanner';
 
 class VideoContainer extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class VideoContainer extends React.Component {
     return (
       <div id={this.props.id} className="video-container">
         <Video id={`${this.props.id}-video`} url={this.props.url} autoplay={this.state.autoplay} />
+        <HashtagBanner className="video-hashtag-banner" />
       </div>
     );
   }
