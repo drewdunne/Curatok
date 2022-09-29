@@ -30,6 +30,7 @@ function Feed(props) {
     console.log('scrollTop: ', event.currentTarget.scrollTop);
     console.log('offsetHeight: ', event.currentTarget.offsetHeight);
     console.log('halfway point of active video:', ((video[i].pos.bottom - video[i].pos.top) / 2) + video[i].pos.top);
+    if (i > 0) console.log('halway of previous video', ((video[i - 1].pos.bottom - video[i].pos.top) / 2) + video[i].pos.top - 10);
     if (event.currentTarget.scrollTop
       > (((video[i].pos.bottom - video[i].pos.top) / 2) + video[i].pos.top)) {
       // console.log('Arrived test passed');
@@ -41,7 +42,7 @@ function Feed(props) {
     if (i > 0) {
       if (event.currentTarget.scrollTop
         // 10 was chosen arbitrarily as a buffer
-        < (((video[i - 1].pos.bottom - video[i].pos.top) / 2) + video[i].pos.top + 10)) {
+        < (((video[i - 1].pos.bottom - video[i - 1].pos.top) / 2) + video[i - 1].pos.top - 10)) {
         video[i].element.pause();
         i -= 1;
         video[i].element.play();
