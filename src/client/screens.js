@@ -4,6 +4,7 @@ const Screens = {
   SignUp: 'createUser',
   Login: 'login',
   TikTokUsername: 'tiktokusername',
+  WelcomeBack: 'welcomeback',
 };
 
 export default Screens;

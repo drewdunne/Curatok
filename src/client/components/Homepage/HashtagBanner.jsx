@@ -14,7 +14,6 @@ function HashtagBanner(props) {
       <HashtagButton tagName="#jobhunting" />
       <HashtagButton tagName="#AI" />
       <HashtagButton tagName="#shuffle" />
-      <HashtagButton tagName="#product Management" />
     </div>
   );
 }

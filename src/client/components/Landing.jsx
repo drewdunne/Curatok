@@ -6,6 +6,7 @@ import SignUpModal from './SignUpModal';
 import Screens from '../screens';
 import TikTokUsernameModal from './TikTokUsernameModal';
 import Homepage from './Homepage/Homepage';
+import WelcomeBack from './WelcomeBack';
 
 function Landing(props) {
   const [screen = '', setScreen] = useState();
@@ -47,7 +48,7 @@ function Landing(props) {
         const username = cookies.substring(cookies.indexOf('=') + 1, cookies.length);
         console.log(username);
         await handleGetCollection(username);
-        setScreen(Screens.Homepage);
+        setScreen(Screens.WelcomeBack);
       }
     }
   }
@@ -83,6 +84,11 @@ function Landing(props) {
     case Screens.Homepage: {
       return (
         <Homepage userVideoCollection={scrapedVideos.data.rows} />
+      );
+    }
+    case Screens.WelcomeBack: {
+      return (
+        <WelcomeBack setScreenToHomepage={() => { setScreen(Screens.Homepage); }} />
       );
     }
     default:
