@@ -7,15 +7,13 @@ function HashtagBanner(props) {
 
   return (
     <div id="hashtag-banner">
-      <HashtagButton tagName="cats" />
-      <HashtagButton tagName="cats" />
-      <HashtagButton tagName="cats" />
-      <HashtagButton tagName="catssssss" />
-      <HashtagButton tagName="cats" />
-      <HashtagButton tagName="cats" />
-      <HashtagButton tagName="cats" />
-      <HashtagButton tagName="cats" />
-      <HashtagButton tagName="cats" />
+      <HashtagButton tagName="#javascript" />
+      <HashtagButton tagName="#math" />
+      <HashtagButton tagName="#resumes" />
+      <HashtagButton tagName="#enrepreneurship" />
+      <HashtagButton tagName="#jobhunting" />
+      <HashtagButton tagName="#AI" />
+      <HashtagButton tagName="#shuffle" />
     </div>
   );
 }

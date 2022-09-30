@@ -43,10 +43,9 @@ app.use((err, req, res) => {
     log: 'Express error handler caught middleware error in unknown function',
     message: { err: 'An error occurred' },
   };
-
   const errorObj = Object.assign(defaultErr, err);
   console.log(errorObj.log);
-  return res.json(errorObj.message);
+  return res.send(errorObj.message);
 });
 
 app.listen(PORT, () => {

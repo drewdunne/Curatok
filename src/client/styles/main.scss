@@ -18,7 +18,41 @@ body {
   background: $dark-grey;
   margin: 0;
 }
+#welcome-content-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  #welcome-logo {
+    width: 40vw;
+    max-width: 400px;
+  }
+  #welcome-back-text {
+    text-align: center;
+    font-family: $font-inter;
+    font-size: 30px;
+    color: $search-white;
+  }
+  #welcome-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-justify: center;
+    text-align: center;
+    font-family: $font-inter;
+    font-size: 30px;
+    color: $search-white;
+    height: 5vh;
+    width: 10vh;
+    padding: 16px;
+    background: linear-gradient(271.32deg, #577CF1 10.86%, #8966DA 48.35%, #EE3AAA 81.86%, #EE3AAA 95.25%);
+    border-radius: 8px;
+    border-radius: 8px;
+  }
 
+}
 .center {
   display: flex; /* establish flex container */
     flex-direction: column; /* make main-axis vertical */

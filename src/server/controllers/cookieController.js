@@ -3,14 +3,10 @@ const cookieParser = require('cookie-parser');
 const cookieController = {};
 
 cookieController.setCookie = (req, res, next) => {
-  res.cookie('secret', Math.ceil(Math.random() * 99).toString());
-
-  res.cookie('codesmith', 'hi', {
+  res.cookie('curatok', req.params.username, {
     maxAge: 600000,
-    httpOnly: true,
+    httpOnly: false,
   });
-
-  console.log(res.cookies);
 
   next();
 };
