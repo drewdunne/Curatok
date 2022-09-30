@@ -8,7 +8,7 @@ import TikTokUsernameModal from './TikTokUsernameModal';
 import Homepage from './Homepage/Homepage';
 
 function Landing(props) {
-  const [screen = Screens.TikTokUsername, setScreen] = useState();
+  const [screen = '', setScreen] = useState();
   const [scrapedVideos = null, setScrapedVideos] = useState();
 
   const handleKeyDown = (e) => {
@@ -24,25 +24,33 @@ function Landing(props) {
       }
     }
   };
+  console.log('invoking setup test passed');
+  setup();
 
-  const handleLogin = (e) => {
-    const attemptLogin = async () => {
-      // send post request to login
-    };
-  };
-
-  const handleCreateUser = (e) => {
-    // complete validation and then setScreen(Screens.Homepage);
-
-  };
-
-  const handleGetCollection = async (username) => {
+  async function handleGetCollection(username) {
     const url = `/api/${username}`;
     const response = await axios.post(url, {
     });
     setScrapedVideos(response);
     setScreen(Screens.Homepage);
-  };
+  }
+
+  async function setup() {
+    console.log('inside setup test passed');
+    if (screen === '') {
+      const cookies = document.cookie;
+      console.log(cookies);
+      if (!cookies) {
+        console.log('setting screen to username');
+        setScreen(Screens.TikTokUsername);
+      } else {
+        const username = cookies.substring(cookies.indexOf('=') + 1, cookies.length);
+        console.log(username);
+        await handleGetCollection(username);
+        setScreen(Screens.Homepage);
+      }
+    }
+  }
 
   switch (screen) {
     case Screens.SignUp: {
