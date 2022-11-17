@@ -1,7 +1,7 @@
 # Curatok
 
 ## Why Curatok?
-Tiktok is a great platform for discovering interesting, diverse content. However users looking for the highest-quality content on a very specific topic, will find their home feed often unrelated and frequently distracting. Those who use the in-app TikTok search feature are ultimately met with poor search filtering and low quality results. Combing through hundreds or thousands of videos with no idea of the content quality can be a headache.
+Tiktok is a great platform for discovering interesting, diverse content. However users looking for the highest-quality content on a very specific topic, will find their home feed often unrelated and frequently distracting. Even worse, Those who use the in-app TikTok search feature are ultimately met with poor search filtering and low quality results. When great content is found, it cannot be categorized by more than a single label. Combing through hundreds or thousands of videos to discover the content you seek can often be a headache.
 
 Curatok enables users to re-discover the highest quality TikTok content they've encountered related to their specific topic of interest.
 
